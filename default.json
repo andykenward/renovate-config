@@ -4,6 +4,8 @@
     "config:best-practices",
     "customManagers:dockerfileVersions"
   ],
+  "minimumReleaseAge": "3 days",
+  "internalChecksFilter": "strict",
   "customManagers": [
     {
       "description": "pnpm pinned in a Dockerfile RUN (npm install -g pnpm@<version>)",

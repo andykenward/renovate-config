@@ -28,6 +28,16 @@ Everything else is handled by Renovate's native managers and needs no config:
 Dockerfile `FROM` (tag + digest), `COPY --from` images (e.g. prek, cosign), and
 Dev Container Features.
 
+## Minimum release age
+
+A `minimumReleaseAge` of **3 days** (with `internalChecksFilter: strict`) holds
+back every update until the release has been public for three days — a
+supply-chain cooling-off period in case a version is yanked or compromised
+shortly after publish. `config:best-practices` already applies this to npm via
+`security:minimumReleaseAgeNpm`; the top-level setting extends the same hold to
+Docker images and GitHub releases (any datasource that exposes a release
+timestamp).
+
 ## Note on file location
 
 Renovate only auto-discovers its config at the **repo root** (`renovate.json`,

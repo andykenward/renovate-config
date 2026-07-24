@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices", ":pinDigests"],
+  "customManagers": [
+    {
+      "description": "pnpm pinned in a Dockerfile RUN (npm install -g pnpm@<version>)",
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)Dockerfile$/"],
+      "matchStrings": ["npm install -g pnpm@(?<currentValue>\\S+)"],
+      "datasourceTemplate": "npm",
+      "depNameTemplate": "pnpm"
+    },
+    {
+      "description": "GitHub CLI pinned as an ARG in a Dockerfile (GH_VERSION=<version>)",
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)Dockerfile$/"],
+      "matchStrings": ["GH_VERSION=(?<currentValue>[\\d.]+)"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "cli/cli",
+      "extractVersionTemplate": "^v(?<version>.+)$"
+    }
+  ]
+}

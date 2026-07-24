@@ -12,13 +12,17 @@ with:
 
 ## What it does
 
-On top of `config:best-practices` and `:pinDigests`, it adds two custom managers
-for version pins that live inside Dockerfile `RUN`/`ARG` lines — places
-Renovate's built-in managers can't see:
+On top of `config:best-practices` (which already pins Docker digests via
+`docker:pinDigests`), it adds custom managers for version pins that live inside
+Dockerfile `RUN`/`ARG` lines — places Renovate's built-in managers can't see:
 
 - **pnpm** — `npm install -g pnpm@<version>`, tracked against the npm datasource.
 - **GitHub CLI** — `GH_VERSION=<version>`, tracked against `cli/cli` GitHub
   releases (the leading `v` on release tags is stripped via `extractVersion`).
+- **`# renovate:`-annotated `ENV`/`ARG` pins** — via the upstream
+  `customManagers:dockerfileVersions` preset, so lines like a
+  `CLAUDE_CODE_VERSION` ARG tagged with a `# renovate: datasource=… depName=…`
+  comment are kept up to date.
 
 Everything else is handled by Renovate's native managers and needs no config:
 Dockerfile `FROM` (tag + digest), `COPY --from` images (e.g. prek, cosign), and
